@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#f1f5f9"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#g)"/>
+  <rect x="80" y="80" width="1040" height="740" rx="32" fill="#ffffff" stroke="#e2e8f0" stroke-width="6"/>
+  <text x="120" y="180" font-family="ui-sans-serif, system-ui" font-size="54" font-weight="700" fill="#0f172a">Campus</text>
+  <text x="120" y="250" font-family="ui-sans-serif, system-ui" font-size="28" fill="#475569">Replace this placeholder with a real photo</text>
+  <circle cx="980" cy="190" r="16" fill="#0ea5e9"/>
+  <circle cx="1030" cy="190" r="16" fill="#1e3a8a"/>
+</svg>
+
+

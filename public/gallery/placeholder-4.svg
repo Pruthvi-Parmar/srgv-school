@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <rect width="1200" height="900" fill="#f8fafc"/>
+  <rect x="80" y="80" width="1040" height="740" rx="32" fill="#ffffff" stroke="#e2e8f0" stroke-width="6"/>
+  <text x="120" y="180" font-family="ui-sans-serif, system-ui" font-size="54" font-weight="700" fill="#0f172a">Sports</text>
+  <text x="120" y="250" font-family="ui-sans-serif, system-ui" font-size="28" fill="#475569">Replace this placeholder with a real photo</text>
+  <circle cx="600" cy="520" r="140" fill="#f1f5f9" stroke="#1e3a8a" stroke-width="10"/>
+  <path d="M600 380v280M460 520h280" stroke="#1e3a8a" stroke-width="10"/>
+</svg>
+
+
