@@ -43,6 +43,48 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section className="border-b border-slate-200 bg-slate-50">
+        <div className="container-page py-10">
+          <h2 className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+            Focused on Excellence
+          </h2>
+          <p className="mt-2 text-center text-2xl font-semibold tracking-tight text-slate-900">
+            Strong academics, world-class environment, beyond-the-classroom learning.
+          </p>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-4">
+            {[
+              {
+                title: "Excellence in Academics",
+                body: "Concept-based CBSE curriculum with well-equipped labs and activity-driven learning.",
+              },
+              {
+                title: "World-Class Infrastructure",
+                body: "Spacious campus, covered courtyard, digital classrooms, and dedicated laboratories.",
+              },
+              {
+                title: "Beyond Academics",
+                body: "Sports, cultural events, clubs and value-based programmes for holistic growth.",
+              },
+              {
+                title: "Guided With Values",
+                body: "A caring management and experienced staff focused on discipline and character.",
+              },
+            ].map((f) => (
+              <div
+                key={f.title}
+                className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+              >
+                <div>
+                  <div className="text-sm font-semibold text-slate-900">{f.title}</div>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">{f.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="container-page py-14">
         <div className="grid gap-10 lg:grid-cols-3">
           <div className="lg:col-span-2">

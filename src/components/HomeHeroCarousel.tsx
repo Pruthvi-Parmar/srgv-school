@@ -34,8 +34,8 @@ export function HomeHeroCarousel() {
   const current = slides[index];
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 text-white shadow-sm">
-      <div className="relative aspect-[4/3] w-full">
+    <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 text-white shadow-md">
+      <div className="relative aspect-[16/9] w-full max-h-[440px]">
         <Image
           src={current.src}
           alt={current.title}
@@ -46,13 +46,13 @@ export function HomeHeroCarousel() {
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent" />
       </div>
-      <div className="pointer-events-none absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
-        <div className="max-w-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide text-sky-200">
+      <div className="pointer-events-none absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
+        <div className="max-w-md">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-200/90">
             Shree Radhagovind Vidyamandir, Ninat
           </div>
-          <h2 className="mt-2 text-lg font-semibold leading-snug sm:text-xl">{current.title}</h2>
-          <p className="mt-1 text-xs text-slate-100/90 sm:text-sm">{current.subtitle}</p>
+          <h2 className="mt-2 text-xl font-semibold leading-snug sm:text-2xl">{current.title}</h2>
+          <p className="mt-2 text-sm text-slate-100/90 sm:text-[15px]">{current.subtitle}</p>
         </div>
         <div className="mt-4 flex gap-1.5">
           {slides.map((_, i) => (

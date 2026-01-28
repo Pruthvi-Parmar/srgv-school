@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { GalleryGrid } from "@/components/GalleryGrid";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -34,24 +34,7 @@ export default function GalleryPage() {
         </div>
       </div>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {gallery.map((g) => (
-          <div key={g.src} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            <div className="relative aspect-[4/3] bg-slate-100">
-              <Image
-                src={g.src}
-                alt={g.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
-            <div className="p-4">
-              <div className="text-sm font-semibold text-slate-900">{g.title}</div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <GalleryGrid items={gallery} />
     </div>
   );
 }
