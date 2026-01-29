@@ -34,38 +34,46 @@ export function HomeHeroCarousel() {
   const current = slides[index];
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 text-white shadow-md">
-      <div className="relative aspect-[16/9] w-full max-h-[440px]">
+    <div className="relative w-full overflow-hidden bg-slate-900 text-white">
+      <div className="relative h-[62vh] min-h-[420px] w-full md:h-[70vh]">
         <Image
           src={current.src}
           alt={current.title}
           fill
           priority
-          className="object-cover opacity-80"
-          sizes="(max-width: 1024px) 100vw, 40vw"
+          className="object-cover"
+          sizes="100vw"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
       </div>
-      <div className="pointer-events-none absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
-        <div className="max-w-md">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-200/90">
-            Shree Radhagovind Vidyamandir, Ninat
+
+      {/* controls */}
+      <div className="absolute bottom-5 left-0 right-0">
+        <div className="container-page flex justify-center">
+          <div className="flex gap-2 rounded-full bg-black/30 px-3 py-2 backdrop-blur">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setIndex(i)}
+                className={`h-2 rounded-full transition-all ${
+                  i === index ? "w-8 bg-white" : "w-2 bg-white/40 hover:bg-white/70"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
           </div>
-          <h2 className="mt-2 text-xl font-semibold leading-snug sm:text-2xl">{current.title}</h2>
-          <p className="mt-2 text-sm text-slate-100/90 sm:text-[15px]">{current.subtitle}</p>
         </div>
-        <div className="mt-4 flex gap-1.5">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setIndex(i)}
-              className={`h-1.5 rounded-full transition-all ${
-                i === index ? "w-6 bg-white" : "w-2 bg-white/40 hover:bg-white/70"
-              }`}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
+      </div>
+
+      {/* subtle caption (optional) */}
+      <div className="pointer-events-none absolute top-5 left-0 right-0 hidden md:block">
+        <div className="container-page">
+          <div className="inline-flex items-center gap-2 rounded-full bg-black/30 px-3 py-1 text-xs font-semibold text-slate-100 backdrop-blur">
+            <span className="h-2 w-2 rounded-full bg-[color:var(--brand-2)]" />
+            {current.title}
+          </div>
         </div>
       </div>
     </div>

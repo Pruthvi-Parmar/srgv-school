@@ -10,7 +10,7 @@ const links = [
   { href: "/about", label: "About Us" },
   { href: "/academics", label: "Academics" },
   { href: "/admissions", label: "Admissions" },
-  { href: "/facilities", label: "Facilities" },
+  { href: "/facilities", label: "Labs" },
   { href: "/gallery", label: "Gallery" },
   { href: "/notices", label: "Notices" },
   { href: "/contact", label: "Contact" },

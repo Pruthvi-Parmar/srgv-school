@@ -28,7 +28,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
               />
             </div>
             <div className="p-4">
-              <div className="text-sm font-semibold text-slate-900">{g.title}</div>
+              {/* <div className="text-sm font-semibold text-slate-900">{g.title}</div> */}
             </div>
           </button>
         ))}
@@ -68,5 +68,6 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
     </>
   );
 }
+
 
 

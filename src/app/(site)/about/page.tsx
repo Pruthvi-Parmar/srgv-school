@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { TeachersSection } from "@/components/TeachersSection";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn about our school’s vision, messages, values and journey.",
+  description: "Learn about our school's vision, messages, values and journey.",
 };
 
 export default function AboutPage() {
@@ -72,13 +73,16 @@ export default function AboutPage() {
               by dedicated and qualified staff who stand as role models for our students.
               <br />
               <br />
-              We welcome every parent’s interest in all aspects of our educational progress.
+              We welcome every parent&apos;s interest in all aspects of our educational progress.
             </p>
           </section>
+
+          <TeachersSection />
         </div>
       </div>
     </div>
   );
 }
+
 
 

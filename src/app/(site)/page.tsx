@@ -2,6 +2,7 @@ import Link from "next/link";
 import { school } from "@/lib/content";
 import { listNotices } from "@/lib/data";
 import { HomeHeroCarousel } from "@/components/HomeHeroCarousel";
+import { CampusVideoPlayer } from "@/components/CampusVideoPlayer";
 
 export const dynamic = "force-dynamic";
 
@@ -10,38 +11,43 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="border-b border-slate-200 bg-gradient-to-b from-slate-50 to-white">
-        <div className="container-page grid gap-10 py-14 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-center lg:py-20">
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700">
-              <span className="h-2 w-2 rounded-full bg-[color:var(--brand-2)]" />
-              Admissions 2026–27 open
-            </div>
-            <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-              {school.name}
-            </h1>
-            <p className="text-base leading-7 text-slate-600 sm:text-lg">
-              {school.tagline} Founded in {school.established}.
-            </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/admissions"
-                className="inline-flex items-center justify-center rounded-xl bg-[color:var(--brand)] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-95"
-              >
-                Admissions
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50"
-              >
-                Contact us
-              </Link>
+      {/* full-bleed hero carousel */}
+      <section className="relative">
+        <HomeHeroCarousel />
+        <div className="pointer-events-none absolute inset-0">
+          <div className="container-page flex h-full items-center">
+            <div className="pointer-events-auto max-w-xl rounded-3xl border border-white/10 bg-black/30 p-6 text-white shadow-lg backdrop-blur sm:p-8">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">
+                <span className="h-2 w-2 rounded-full bg-[color:var(--brand-2)]" />
+                Admissions 2026–27 open
+              </div>
+              <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+                {school.name}
+              </h1>
+              <p className="mt-3 text-sm leading-7 text-slate-100/90 sm:text-base">
+                {school.tagline} Founded in {school.established}.
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/admissions"
+                  className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-100"
+                >
+                  Admissions
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/30 bg-transparent px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
+                >
+                  Contact us
+                </Link>
+              </div>
             </div>
           </div>
-
-          <HomeHeroCarousel />
         </div>
       </section>
+
+      {/* Campus video player */}
+      <CampusVideoPlayer />
 
       <section className="border-b border-slate-200 bg-slate-50">
         <div className="container-page py-10">
