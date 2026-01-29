@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { TeachersSection } from "@/components/TeachersSection";
 
 export const metadata: Metadata = {
   title: "Academics",
@@ -9,11 +10,11 @@ export const metadata: Metadata = {
 export default function AcademicsPage() {
   return (
     <div className="container-page py-12">
-      <div className="max-w-3xl">
+      <div className="max-w-4xl">
         <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Academics</h1>
         <p className="mt-3 text-sm leading-7 text-slate-600">
           We believe strong concepts create strong futures. Our approach blends classroom learning with
-          practical exposure through labs, activities, and structured guidance.
+          practical exposure through laboratories, activities, and structured guidance.
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -46,7 +47,7 @@ export default function AcademicsPage() {
           <div className="text-sm font-semibold text-slate-900">Student & Parent guidelines</div>
           <p className="mt-2 text-sm leading-7 text-slate-600">
             Home and school work best when they work together. We invite parents to engage using the
-            pupil’s diary, attending parent-teacher meetings, school functions, and meeting teachers when
+            pupil&apos;s diary, attending parent-teacher meetings, school functions, and meeting teachers when
             needed.
           </p>
           <div className="mt-4">
@@ -55,10 +56,25 @@ export default function AcademicsPage() {
             </Link>
           </div>
         </div>
+
+        <div className="mt-10">
+          <details className="group rounded-2xl border border-slate-200 bg-white p-6">
+            <summary className="cursor-pointer list-none text-base font-semibold text-slate-900">
+              <div className="flex items-center justify-between gap-4">
+                <span>Our Teachers</span>
+                <span className="text-xs font-semibold text-[color:var(--brand)] group-open:hidden">View</span>
+                <span className="text-xs font-semibold text-[color:var(--brand)] hidden group-open:inline">Hide</span>
+              </div>
+              <p className="mt-2 text-sm font-normal text-slate-600">
+                Click to view the list of teachers and staff for the academic year 2025–26.
+              </p>
+            </summary>
+            <div className="mt-6">
+              <TeachersSection />
+            </div>
+          </details>
+        </div>
       </div>
     </div>
   );
 }
-
-
-

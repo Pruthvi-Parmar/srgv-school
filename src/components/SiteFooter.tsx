@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 
 export function SiteFooter({
   contact,
@@ -37,10 +38,7 @@ export function SiteFooter({
           <div className="text-sm font-semibold text-slate-900">Contact</div>
           <div className="space-y-2 text-sm text-slate-700">
             <div>
-              <span className="text-slate-600">Phone:</span>{" "}
-              <a href={`tel:${contact.phone}`} className="font-medium text-slate-900">
-                {contact.phone}
-              </a>
+              <span className="text-slate-600">Phone:</span>{" "}<span className="inline-flex items-center gap-2"><a href={`tel:`} className="font-medium text-slate-900">{contact.phone}</a><WhatsAppLink phone={contact.phone} variant="icon" /></span>
             </div>
             <div>
               <span className="text-slate-600">Email:</span>{" "}

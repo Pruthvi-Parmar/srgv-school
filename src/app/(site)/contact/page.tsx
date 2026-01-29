@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getSettings } from "@/lib/data";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 
 export const dynamic = "force-dynamic";
 
@@ -25,9 +26,7 @@ export default async function ContactPage() {
             <div className="space-y-3 text-sm text-slate-700">
               <div>
                 <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Phone</div>
-                <a className="text-base font-semibold text-slate-900" href={`tel:${contact.phone}`}>
-                  {contact.phone}
-                </a>
+                <span className="inline-flex items-center gap-2"><a className="text-base font-semibold text-slate-900" href={`tel:`}>{contact.phone}</a><WhatsAppLink phone={contact.phone} /></span>
               </div>
               <div>
                 <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Email</div>
@@ -56,7 +55,16 @@ export default async function ContactPage() {
                 </svg>
                 <span>8:30 AM to 3:00 PM</span>
               </div>
-              <p className="mt-2 text-xs text-slate-600">Monday to Saturday</p>
+              <p className="mt-2 text-xs text-slate-600">Monday to Friday</p>
+            </div>
+            <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+                <svg className="h-5 w-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>8:30 AM to 12:00 PM</span>
+              </div>
+              <p className="mt-2 text-xs text-slate-600">Saturday</p>
             </div>
           </div>
 
