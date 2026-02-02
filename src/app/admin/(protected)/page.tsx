@@ -19,6 +19,24 @@ export default function AdminHomePage() {
           <div className="text-sm font-semibold text-slate-900">Settings</div>
           <div className="mt-2 text-sm text-slate-600">Update admissions text and contact details.</div>
         </Link>
+        <Link
+          href="/admin/achievements"
+          className="rounded-2xl border border-slate-200 bg-white p-6 hover:bg-slate-50"
+        >
+          <div className="text-sm font-semibold text-slate-900">Achievements</div>
+          <div className="mt-2 text-sm text-slate-600">Highlight key achievements on the website.</div>
+        </Link>
+        <Link href="/admin/labs" className="rounded-2xl border border-slate-200 bg-white p-6 hover:bg-slate-50">
+          <div className="text-sm font-semibold text-slate-900">Labs</div>
+          <div className="mt-2 text-sm text-slate-600">Manage the Labs page content.</div>
+        </Link>
+        <Link
+          href="/admin/gallery"
+          className="rounded-2xl border border-slate-200 bg-white p-6 hover:bg-slate-50"
+        >
+          <div className="text-sm font-semibold text-slate-900">Gallery</div>
+          <div className="mt-2 text-sm text-slate-600">Manage gallery images and order.</div>
+        </Link>
       </div>
     </div>
   );

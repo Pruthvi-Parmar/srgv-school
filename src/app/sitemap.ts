@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/`, lastModified: now },
     { url: `${base}/about`, lastModified: now },
     { url: `${base}/academics`, lastModified: now },
+    { url: `${base}/achievements`, lastModified: now },
     { url: `${base}/admissions`, lastModified: now },
     { url: `${base}/facilities`, lastModified: now },
     { url: `${base}/gallery`, lastModified: now },

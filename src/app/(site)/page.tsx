@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { school } from "@/lib/content";
-import { listNotices } from "@/lib/data";
+import { listAchievements, listNotices } from "@/lib/data";
 import { HomeHeroCarousel } from "@/components/HomeHeroCarousel";
 import { CampusVideoPlayer } from "@/components/CampusVideoPlayer";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const notices = await listNotices(5);
+  const [notices, achievements] = await Promise.all([
+    listNotices(5),
+    listAchievements(6),
+  ]);
 
   return (
     <div>
@@ -48,6 +51,53 @@ export default async function HomePage() {
 
       {/* Campus video player */}
       <CampusVideoPlayer />
+
+      {/* Achievements */}
+      <section className="border-b border-slate-200 bg-white">
+        <div className="container-page py-10">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div>
+              <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Achievements</h2>
+              <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
+                Celebrating our students and school milestones.
+              </p>
+            </div>
+            <Link
+              href="/admin/achievements"
+              className="hidden text-xs font-semibold text-[color:var(--brand)] md:inline-flex"
+            >
+              (Admins: manage achievements →)
+            </Link>
+          </div>
+
+          {achievements.length === 0 ? (
+            <p className="mt-6 text-sm text-slate-600">
+              Achievements for the current academic year will be updated soon.
+            </p>
+          ) : (
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {achievements.map((a) => (
+                <div
+                  key={String(a._id)}
+                  className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-5"
+                >
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm font-semibold text-slate-900">{a.title}</div>
+                      {a.year ? (
+                        <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-700">
+                          {a.year}
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-2 text-sm leading-6 text-slate-600 line-clamp-4">{a.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
       <section className="border-b border-slate-200 bg-slate-50">
         <div className="container-page py-10">
