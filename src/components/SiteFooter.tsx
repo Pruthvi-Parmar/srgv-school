@@ -14,6 +14,7 @@ export function SiteFooter({
           <p className="text-sm text-slate-600">
             A CBSE affiliated English medium school focused on values, discipline, and holistic development.
           </p>
+          <p className="text-xs font-medium text-slate-600">CBSE Affiliation No.: 430185</p>
         </div>
 
         <div className="space-y-3">
@@ -38,7 +39,21 @@ export function SiteFooter({
           <div className="text-sm font-semibold text-slate-900">Contact</div>
           <div className="space-y-2 text-sm text-slate-700">
             <div>
-              <span className="text-slate-600">Phone:</span>{" "}<span className="inline-flex items-center gap-2"><a href={`tel:`} className="font-medium text-slate-900">{contact.phone}</a><WhatsAppLink phone={contact.phone} variant="icon" /></span>
+              <span className="text-slate-600">Phone:</span>{" "}
+              <span className="inline-flex items-center gap-2">
+                <a href={`tel:${contact.phone}`} className="font-medium text-slate-900">
+                  {contact.phone}
+                </a>
+                <WhatsAppLink phone={contact.phone} variant="icon" />
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-600">Alt Phone:</span>{" "}
+              <span className="font-medium text-slate-900">97144 77650</span>
+            </div>
+            <div>
+              <span className="text-slate-600">Office:</span>{" "}
+              <span className="font-medium text-slate-900">02622-253848</span>
             </div>
             <div>
               <span className="text-slate-600">Email:</span>{" "}

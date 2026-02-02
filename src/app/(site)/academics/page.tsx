@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { TeachersSection } from "@/components/TeachersSection";
+import { ptaMembers, smcMembers } from "@/lib/governance";
 
 export const metadata: Metadata = {
   title: "Academics",
@@ -57,7 +58,7 @@ export default function AcademicsPage() {
           </div>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-10 space-y-6">
           <details className="group rounded-2xl border border-slate-200 bg-white p-6">
             <summary className="cursor-pointer list-none text-base font-semibold text-slate-900">
               <div className="flex items-center justify-between gap-4">
@@ -71,6 +72,67 @@ export default function AcademicsPage() {
             </summary>
             <div className="mt-6">
               <TeachersSection />
+            </div>
+          </details>
+
+          <details className="group rounded-2xl border border-slate-200 bg-white p-6">
+            <summary className="cursor-pointer list-none text-base font-semibold text-slate-900">
+              <div className="flex items-center justify-between gap-4">
+                <span>PTA Members (2023–24)</span>
+                <span className="text-xs font-semibold text-[color:var(--brand)] group-open:hidden">View</span>
+                <span className="text-xs font-semibold text-[color:var(--brand)] hidden group-open:inline">Hide</span>
+              </div>
+              <p className="mt-2 text-sm font-normal text-slate-600">
+                Parents–Teachers Association members supporting collaborative growth between home and school.
+              </p>
+            </summary>
+            <div className="mt-4 space-y-3 text-sm text-slate-700">
+              {ptaMembers.map((m, idx) => (
+                <div
+                  key={`${m.name}-${idx}`}
+                  className="rounded-xl border border-slate-200 bg-slate-50 p-4"
+                >
+                  <div className="text-sm font-semibold text-slate-900">{m.name}</div>
+                  <div className="mt-1 text-xs font-medium text-slate-600">{m.role}</div>
+                  <div className="mt-1 text-xs text-slate-700">{m.address}</div>
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <details className="group rounded-2xl border border-slate-200 bg-white p-6">
+            <summary className="cursor-pointer list-none text-base font-semibold text-slate-900">
+              <div className="flex items-center justify-between gap-4">
+                <span>School Managing Committee (SMC)</span>
+                <span className="text-xs font-semibold text-[color:var(--brand)] group-open:hidden">View</span>
+                <span className="text-xs font-semibold text-[color:var(--brand)] hidden group-open:inline">Hide</span>
+              </div>
+              <p className="mt-2 text-sm font-normal text-slate-600">
+                Members of the School Managing Committee guiding the institution&apos;s academic and administrative
+                direction.
+              </p>
+            </summary>
+            <div className="mt-4 space-y-3 text-sm text-slate-700">
+              {smcMembers.map((m, idx) => (
+                <div
+                  key={`${m.name}-${idx}`}
+                  className="rounded-xl border border-slate-200 bg-slate-50 p-4"
+                >
+                  <div className="text-sm font-semibold text-slate-900">{m.name}</div>
+                  <div className="mt-1 text-xs text-slate-700">
+                    <span className="font-medium">Father/Spouse:</span> {m.fatherOrSpouseName}
+                  </div>
+                  <div className="mt-1 text-xs text-slate-700">
+                    <span className="font-medium">Designation:</span> {m.designation}
+                  </div>
+                  <div className="mt-1 text-xs text-slate-700">
+                    <span className="font-medium">Occupation with address:</span> {m.occupationWithAddress}
+                  </div>
+                  <div className="mt-1 text-xs text-slate-700">
+                    <span className="font-medium">Residential address:</span> {m.residentialAddress}
+                  </div>
+                </div>
+              ))}
             </div>
           </details>
         </div>

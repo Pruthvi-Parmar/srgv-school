@@ -39,7 +39,16 @@ export default async function AdmissionsPage() {
           <div className="mt-4 space-y-2 text-sm text-slate-700">
             <div>
               <span className="text-slate-600">Phone:</span>{" "}
-              <span className="inline-flex items-center gap-2"><a className="font-semibold text-slate-900" href={`tel:`}>{settings.contact.phone}</a><WhatsAppLink phone={settings.contact.phone} variant="icon" /></span>
+              <span className="inline-flex items-center gap-2">
+                <a className="font-semibold text-slate-900" href={`tel:${settings.contact.phone}`}>
+                  {settings.contact.phone}
+                </a>
+                <WhatsAppLink phone={settings.contact.phone} variant="icon" />
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-600">Alt Phone:</span>{" "}
+              <span className="font-semibold text-slate-900">97144 77650</span>
             </div>
             <div>
               <span className="text-slate-600">Email:</span>{" "}

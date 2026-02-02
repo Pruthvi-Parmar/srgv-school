@@ -10,7 +10,7 @@ export function LogoMark({
     <Link href="/" className="flex items-center gap-3">
       <div className="relative h-10 w-10 overflow-hidden rounded-full border border-slate-200 bg-white shadow-sm">
         <Image
-          src="/gallery/logo.jpeg"
+          src="/gallery/New-logo-1.jpeg"
           alt="Shree Radhagovind Vidyamandir logo"
           fill
           sizes="40px"
@@ -19,7 +19,7 @@ export function LogoMark({
       </div>
       <div className="leading-tight">
         <div className="text-sm font-semibold text-slate-900 sm:text-base">{title}</div>
-        <div className="text-xs text-slate-600">CBSE Affiliated English Medium School</div>
+        <div className="text-xs text-slate-600">CBSE Affiliated English Medium School · Affiliation No. 430185</div>
       </div>
     </Link>
   );

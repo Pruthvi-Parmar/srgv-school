@@ -26,7 +26,15 @@ export default async function ContactPage() {
             <div className="space-y-3 text-sm text-slate-700">
               <div>
                 <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Phone</div>
-                <span className="inline-flex items-center gap-2"><a className="text-base font-semibold text-slate-900" href={`tel:`}>{contact.phone}</a><WhatsAppLink phone={contact.phone} /></span>
+                <span className="inline-flex items-center gap-2">
+                  <a className="text-base font-semibold text-slate-900" href={`tel:${contact.phone}`}>
+                    {contact.phone}
+                  </a>
+                  <WhatsAppLink phone={contact.phone} />
+                </span>
+                <p className="mt-1 text-xs text-slate-600">
+                  Alt: 97144 77650 &nbsp;·&nbsp; Office: 02622-253848
+                </p>
               </div>
               <div>
                 <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Email</div>
