@@ -185,6 +185,7 @@ export async function createAchievement(input: AchievementInput) {
     title: input.title.trim(),
     description: input.description.trim(),
     year: input.year?.trim() || undefined,
+    image: input.image?.trim() || undefined,
     createdAt: now,
     updatedAt: now,
   };
@@ -201,6 +202,7 @@ export async function updateAchievement(id: string, input: AchievementInput) {
     title: input.title.trim(),
     description: input.description.trim(),
     year: input.year?.trim() || undefined,
+    image: input.image?.trim() || undefined,
     updatedAt: new Date(),
   };
   await col.updateOne({ _id }, { $set: patch });

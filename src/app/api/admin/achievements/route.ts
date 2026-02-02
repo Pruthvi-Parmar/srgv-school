@@ -11,6 +11,7 @@ export async function GET() {
       title: a.title,
       description: a.description,
       year: a.year,
+      image: a.image,
     })),
   );
 }
@@ -21,11 +22,12 @@ export async function POST(req: Request) {
     title?: string;
     description?: string;
     year?: string;
+    image?: string;
   };
   if (!title || !description) {
     return NextResponse.json({ error: "Missing title/description" }, { status: 400 });
   }
-  const created = await createAchievement({ title, description, year });
+  const created = await createAchievement({ title, description, year, image });
   return NextResponse.json({ ok: true, id: created && String(created._id) });
 }
 

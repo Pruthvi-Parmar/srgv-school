@@ -38,6 +38,14 @@ export default async function AchievementsPage() {
                   ) : null}
                 </div>
                 <p className="mt-2 whitespace-pre-line text-sm leading-7 text-slate-700">{a.description}</p>
+                {a.image ? (
+                  <div className="mt-3 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                    <div
+                      className="h-40 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${a.image})` }}
+                    />
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

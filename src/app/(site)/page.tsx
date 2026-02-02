@@ -91,6 +91,14 @@ export default async function HomePage() {
                       ) : null}
                     </div>
                     <p className="mt-2 text-sm leading-6 text-slate-600 line-clamp-4">{a.description}</p>
+                    {a.image ? (
+                      <div className="mt-3 overflow-hidden rounded-xl border border-slate-200 bg-white">
+                        <div
+                          className="h-32 bg-cover bg-center"
+                          style={{ backgroundImage: `url(${a.image})` }}
+                        />
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               ))}

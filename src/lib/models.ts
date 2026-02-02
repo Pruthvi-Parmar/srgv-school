@@ -45,6 +45,7 @@ export type Achievement = {
   title: string;
   description: string;
   year?: string;
+  image?: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -53,6 +54,7 @@ export type AchievementInput = {
   title: string;
   description: string;
   year?: string;
+  image?: string;
 };
 
 export type Lab = {

@@ -7,6 +7,7 @@ type AchievementDto = {
   title: string;
   description: string;
   year?: string;
+  image?: string;
 };
 
 export function AdminAchievementsClient() {
@@ -18,6 +19,7 @@ export function AdminAchievementsClient() {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
   const [saving, setSaving] = useState(false);
 
   async function load() {
@@ -44,6 +46,7 @@ export function AdminAchievementsClient() {
       setTitle("");
       setYear("");
       setDescription("");
+      setImage("");
       return;
     }
     const current = items.find((i) => i.id === editingId);
@@ -51,13 +54,14 @@ export function AdminAchievementsClient() {
     setTitle(current.title);
     setYear(current.year ?? "");
     setDescription(current.description);
+    setImage(current.image ?? "");
   }, [editingId, items]);
 
   async function save() {
     setSaving(true);
     setError(null);
     try {
-      const payload = { title, description, year: year || undefined };
+      const payload = { title, description, year: year || undefined, image: image || undefined };
       const isEdit = !!editingId;
       const res = await fetch(isEdit ? `/api/admin/achievements/${editingId}` : "/api/admin/achievements", {
         method: isEdit ? "PUT" : "POST",
@@ -70,6 +74,7 @@ export function AdminAchievementsClient() {
       setTitle("");
       setYear("");
       setDescription("");
+      setImage("");
       await load();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Save failed");
@@ -126,6 +131,17 @@ export function AdminAchievementsClient() {
               onChange={(e) => setYear(e.target.value)}
               className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-200"
               placeholder="e.g. 2023-24"
+            />
+          </label>
+          <label className="block">
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Image path (optional)
+            </span>
+            <input
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+              className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-200"
+              placeholder="/gallery/achievements/award-1.jpeg"
             />
           </label>
           <label className="block">
