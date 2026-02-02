@@ -28,6 +28,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: "/gallery/New-logo-1.jpeg",
+  },
 };
 
 export default function RootLayout({

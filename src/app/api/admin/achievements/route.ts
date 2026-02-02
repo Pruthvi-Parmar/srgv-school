@@ -18,7 +18,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   if (!(await isAdminRequestAuthed())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const { title, description, year } = (await req.json().catch(() => ({}))) as {
+  const { title, description, year, image } = (await req.json().catch(() => ({}))) as {
     title?: string;
     description?: string;
     year?: string;
