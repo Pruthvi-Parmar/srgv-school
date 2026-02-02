@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 
 export function SiteFooter({
@@ -15,6 +16,17 @@ export function SiteFooter({
             A CBSE affiliated English medium school focused on values, discipline, and holistic development.
           </p>
           <p className="text-xs font-medium text-slate-600">CBSE Affiliation No.: 430185</p>
+          <div className="mt-3">
+            <div className="relative h-24 w-48">
+              <Image
+                src="/gallery/New-logo-1.jpeg"
+                alt="Shree Radhagovind Vidyamandir logo"
+                fill
+                sizes="160px"
+                className="object-contain"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="space-y-3">
