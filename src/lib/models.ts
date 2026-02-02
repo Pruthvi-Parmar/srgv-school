@@ -28,6 +28,18 @@ export type SiteSettings = {
   updatedAt: Date;
 };
 
+export type AcademicsSettings = {
+  _id: "singleton";
+  introText: string;
+  guidelinesText: string;
+  featureCards: {
+    id: string;
+    title: string;
+    desc: string;
+  }[];
+  updatedAt: Date;
+};
+
 export type Achievement = {
   _id: ObjectId;
   title: string;
@@ -72,6 +84,67 @@ export type GalleryItem = {
 export type GalleryItemInput = {
   title: string;
   src: string;
+  order?: number;
+};
+
+export type TeacherDoc = {
+  _id: ObjectId;
+  name: string;
+  designation?: string;
+  qualification?: string;
+  photo?: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type TeacherInput = {
+  name: string;
+  designation?: string;
+  qualification?: string;
+  photo?: string;
+  order?: number;
+};
+
+export type PtaMemberDoc = {
+  _id: ObjectId;
+  name: string;
+  role: string;
+  address: string;
+  photo?: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type PtaMemberInput = {
+  name: string;
+  role: string;
+  address: string;
+  photo?: string;
+  order?: number;
+};
+
+export type SmcMemberDoc = {
+  _id: ObjectId;
+  name: string;
+  fatherOrSpouseName: string;
+  designation: string;
+  occupationWithAddress: string;
+  residentialAddress: string;
+  photo?: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type SmcMemberInput = {
+  name: string;
+  fatherOrSpouseName: string;
+  designation: string;
+  occupationWithAddress: string;
+  residentialAddress: string;
+  photo?: string;
   order?: number;
 };
 

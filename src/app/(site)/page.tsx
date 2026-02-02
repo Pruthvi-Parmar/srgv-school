@@ -66,7 +66,7 @@ export default async function HomePage() {
               href="/admin/achievements"
               className="hidden text-xs font-semibold text-[color:var(--brand)] md:inline-flex"
             >
-              (Admins: manage achievements →)
+
             </Link>
           </div>
 

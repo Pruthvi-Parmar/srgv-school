@@ -37,6 +37,34 @@ export default function AdminHomePage() {
           <div className="text-sm font-semibold text-slate-900">Gallery</div>
           <div className="mt-2 text-sm text-slate-600">Manage gallery images and order.</div>
         </Link>
+        <Link
+          href="/admin/teachers"
+          className="rounded-2xl border border-slate-200 bg-white p-6 hover:bg-slate-50"
+        >
+          <div className="text-sm font-semibold text-slate-900">Teachers</div>
+          <div className="mt-2 text-sm text-slate-600">Manage teachers list and details.</div>
+        </Link>
+        <Link
+          href="/admin/pta"
+          className="rounded-2xl border border-slate-200 bg-white p-6 hover:bg-slate-50"
+        >
+          <div className="text-sm font-semibold text-slate-900">PTA Members</div>
+          <div className="mt-2 text-sm text-slate-600">Manage PTA members displayed in Academics.</div>
+        </Link>
+        <Link
+          href="/admin/smc"
+          className="rounded-2xl border border-slate-200 bg-white p-6 hover:bg-slate-50"
+        >
+          <div className="text-sm font-semibold text-slate-900">SMC Members</div>
+          <div className="mt-2 text-sm text-slate-600">Manage School Managing Committee members.</div>
+        </Link>
+        <Link
+          href="/admin/academics"
+          className="rounded-2xl border border-slate-200 bg-white p-6 hover:bg-slate-50"
+        >
+          <div className="text-sm font-semibold text-slate-900">Academics text</div>
+          <div className="mt-2 text-sm text-slate-600">Edit intro, guidelines and highlight cards.</div>
+        </Link>
       </div>
     </div>
   );

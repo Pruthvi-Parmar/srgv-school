@@ -1,43 +1,32 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { TeachersSection } from "@/components/TeachersSection";
-import { ptaMembers, smcMembers } from "@/lib/governance";
+import { getAcademicsSettings, listPtaMembers, listSmcMembers } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Academics",
   description: "Academic approach, curriculum support, and student development at SRVM, Ninat.",
 };
 
-export default function AcademicsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function AcademicsPage() {
+  const [settings, ptaMembers, smcMembers] = await Promise.all([
+    getAcademicsSettings(),
+    listPtaMembers(),
+    listSmcMembers(),
+  ]);
+
   return (
     <div className="container-page py-12">
       <div className="max-w-4xl">
         <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Academics</h1>
-        <p className="mt-3 text-sm leading-7 text-slate-600">
-          We believe strong concepts create strong futures. Our approach blends classroom learning with
-          practical exposure through laboratories, activities, and structured guidance.
-        </p>
+        <p className="mt-3 text-sm leading-7 text-slate-600">{settings.introText}</p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          {[
-            {
-              title: "Concept-based learning",
-              desc: "Focus on understanding and reasoning, not rote memorization.",
-            },
-            {
-              title: "Experiential learning",
-              desc: "Exploration and experimentation supported by laboratories and activities.",
-            },
-            {
-              title: "Holistic growth",
-              desc: "Equal emphasis on academics, sports, creative arts and values.",
-            },
-            {
-              title: "Supportive environment",
-              desc: "A safe, disciplined campus that encourages confidence and stage readiness.",
-            },
-          ].map((c) => (
-            <div key={c.title} className="rounded-2xl border border-slate-200 bg-white p-6">
+          {settings.featureCards.map((c) => (
+            <div key={c.id} className="rounded-2xl border border-slate-200 bg-white p-6">
               <div className="text-sm font-semibold text-slate-900">{c.title}</div>
               <div className="mt-2 text-sm leading-7 text-slate-600">{c.desc}</div>
             </div>
@@ -45,12 +34,8 @@ export default function AcademicsPage() {
         </div>
 
         <div className="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-          <div className="text-sm font-semibold text-slate-900">Student & Parent guidelines</div>
-          <p className="mt-2 text-sm leading-7 text-slate-600">
-            Home and school work best when they work together. We invite parents to engage using the
-            pupil&apos;s diary, attending parent-teacher meetings, school functions, and meeting teachers when
-            needed.
-          </p>
+          <div className="text-sm font-semibold text-slate-900">Student &amp; Parent guidelines</div>
+          <p className="mt-2 text-sm leading-7 text-slate-600">{settings.guidelinesText}</p>
           <div className="mt-4">
             <Link href="/contact" className="text-sm font-semibold text-[color:var(--brand)]">
               Contact us to know more →
@@ -67,7 +52,7 @@ export default function AcademicsPage() {
                 <span className="text-xs font-semibold text-[color:var(--brand)] hidden group-open:inline">Hide</span>
               </div>
               <p className="mt-2 text-sm font-normal text-slate-600">
-                Click to view the list of teachers and staff for the academic year 2025–26.
+                Click to view the list of teachers and staff for the current academic year.
               </p>
             </summary>
             <div className="mt-6">
@@ -87,14 +72,27 @@ export default function AcademicsPage() {
               </p>
             </summary>
             <div className="mt-4 space-y-3 text-sm text-slate-700">
-              {ptaMembers.map((m, idx) => (
+              {ptaMembers.map((m) => (
                 <div
-                  key={`${m.name}-${idx}`}
-                  className="rounded-xl border border-slate-200 bg-slate-50 p-4"
+                  key={String(m._id)}
+                  className="flex gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4"
                 >
-                  <div className="text-sm font-semibold text-slate-900">{m.name}</div>
-                  <div className="mt-1 text-xs font-medium text-slate-600">{m.role}</div>
-                  <div className="mt-1 text-xs text-slate-700">{m.address}</div>
+                  {m.photo ? (
+                    <div className="relative mt-0.5 h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-200">
+                      <Image
+                        src={m.photo}
+                        alt={m.name}
+                        fill
+                        sizes="40px"
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : null}
+                  <div>
+                    <div className="text-sm font-semibold text-slate-900">{m.name}</div>
+                    <div className="mt-1 text-xs font-medium text-slate-600">{m.role}</div>
+                    <div className="mt-1 text-xs text-slate-700">{m.address}</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -113,23 +111,36 @@ export default function AcademicsPage() {
               </p>
             </summary>
             <div className="mt-4 space-y-3 text-sm text-slate-700">
-              {smcMembers.map((m, idx) => (
+              {smcMembers.map((m) => (
                 <div
-                  key={`${m.name}-${idx}`}
-                  className="rounded-xl border border-slate-200 bg-slate-50 p-4"
+                  key={String(m._id)}
+                  className="flex gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4"
                 >
-                  <div className="text-sm font-semibold text-slate-900">{m.name}</div>
-                  <div className="mt-1 text-xs text-slate-700">
-                    <span className="font-medium">Father/Spouse:</span> {m.fatherOrSpouseName}
-                  </div>
-                  <div className="mt-1 text-xs text-slate-700">
-                    <span className="font-medium">Designation:</span> {m.designation}
-                  </div>
-                  <div className="mt-1 text-xs text-slate-700">
-                    <span className="font-medium">Occupation with address:</span> {m.occupationWithAddress}
-                  </div>
-                  <div className="mt-1 text-xs text-slate-700">
-                    <span className="font-medium">Residential address:</span> {m.residentialAddress}
+                  {m.photo ? (
+                    <div className="relative mt-0.5 h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-200">
+                      <Image
+                        src={m.photo}
+                        alt={m.name}
+                        fill
+                        sizes="40px"
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : null}
+                  <div>
+                    <div className="text-sm font-semibold text-slate-900">{m.name}</div>
+                    <div className="mt-1 text-xs text-slate-700">
+                      <span className="font-medium">Father/Spouse:</span> {m.fatherOrSpouseName}
+                    </div>
+                    <div className="mt-1 text-xs text-slate-700">
+                      <span className="font-medium">Designation:</span> {m.designation}
+                    </div>
+                    <div className="mt-1 text-xs text-slate-700">
+                      <span className="font-medium">Occupation with address:</span> {m.occupationWithAddress}
+                    </div>
+                    <div className="mt-1 text-xs text-slate-700">
+                      <span className="font-medium">Residential address:</span> {m.residentialAddress}
+                    </div>
                   </div>
                 </div>
               ))}

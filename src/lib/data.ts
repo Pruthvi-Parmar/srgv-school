@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import { getDb } from "@/lib/mongodb";
 import type {
+  AcademicsSettings,
   Achievement,
   AchievementInput,
   GalleryItem,
@@ -9,15 +10,27 @@ import type {
   LabInput,
   Notice,
   NoticeInput,
+  PtaMemberDoc,
+  PtaMemberInput,
   SiteSettings,
+  SmcMemberDoc,
+  SmcMemberInput,
+  TeacherDoc,
+  TeacherInput,
 } from "@/lib/models";
 import { defaultAdmissionsText, defaultContact } from "@/lib/content";
+import { ptaMembers as ptaSeed, smcMembers as smcSeed } from "@/lib/governance";
+import { teachers as teacherSeed } from "@/lib/teachers";
 
 const NOTICES = "notices";
 const SETTINGS = "site_settings";
+const ACADEMICS_SETTINGS = "academics_settings";
 const ACHIEVEMENTS = "achievements";
 const LABS = "labs";
 const GALLERY_ITEMS = "gallery_items";
+const TEACHERS = "teachers";
+const PTA = "pta_members";
+const SMC = "smc_members";
 
 export async function getSettings(): Promise<SiteSettings> {
   const db = await getDb();
@@ -54,6 +67,46 @@ export async function updateSettings(patch: Partial<Omit<SiteSettings, "_id" | "
     { upsert: true },
   );
   return await getSettings();
+}
+
+// Academics settings
+
+export async function getAcademicsSettings(): Promise<AcademicsSettings> {
+  const db = await getDb();
+  const col = db.collection<AcademicsSettings>(ACADEMICS_SETTINGS);
+  const existing = await col.findOne({ _id: "singleton" });
+  if (existing) return existing;
+  const now = new Date();
+  const created: AcademicsSettings = {
+    _id: "singleton",
+    introText:
+      "We believe strong concepts create strong futures. Our approach blends classroom learning with practical exposure through laboratories, activities, and structured guidance.",
+    guidelinesText:
+      "Home and school work best when they work together. We invite parents to engage using the pupil&apos;s diary, attending parent-teacher meetings, school functions, and meeting teachers when needed.",
+    featureCards: [
+      { id: "concept-based", title: "Concept-based learning", desc: "Focus on understanding and reasoning, not rote memorization." },
+      { id: "experiential", title: "Experiential learning", desc: "Exploration and experimentation supported by laboratories and activities." },
+      { id: "holistic", title: "Holistic growth", desc: "Equal emphasis on academics, sports, creative arts and values." },
+      { id: "supportive", title: "Supportive environment", desc: "A safe, disciplined campus that encourages confidence and stage readiness." },
+    ],
+    updatedAt: now,
+  };
+  await col.insertOne(created);
+  return created;
+}
+
+export async function updateAcademicsSettings(
+  patch: Partial<Omit<AcademicsSettings, "_id" | "updatedAt">>,
+): Promise<AcademicsSettings> {
+  const db = await getDb();
+  const col = db.collection<AcademicsSettings>(ACADEMICS_SETTINGS);
+  const now = new Date();
+  await col.updateOne(
+    { _id: "singleton" },
+    { $set: { ...patch, updatedAt: now } },
+    { upsert: true },
+  );
+  return await getAcademicsSettings();
 }
 
 export async function listNotices(limit = 20) {
@@ -341,6 +394,216 @@ export async function updateGalleryItem(id: string, input: GalleryItemInput) {
 export async function deleteGalleryItem(id: string) {
   const db = await getDb();
   const col = db.collection<GalleryItem>(GALLERY_ITEMS);
+  if (!ObjectId.isValid(id)) return false;
+  const res = await col.deleteOne({ _id: new ObjectId(id) });
+  return res.deletedCount === 1;
+}
+
+// Teachers
+
+export async function listTeachers() {
+  const db = await getDb();
+  const col = db.collection<TeacherDoc>(TEACHERS);
+  const count = await col.countDocuments();
+  if (count === 0 && teacherSeed.length > 0) {
+    const now = new Date();
+    await col.insertMany(
+      teacherSeed.map((t, index) => ({
+        name: t.name,
+        designation: t.designation,
+        qualification: t.qualification,
+        order: index + 1,
+        createdAt: now,
+        updatedAt: now,
+      })) as unknown as TeacherDoc[],
+    );
+  }
+  return await col
+    .find({})
+    .sort({ order: 1, createdAt: 1 })
+    .toArray();
+}
+
+export async function createTeacher(input: TeacherInput) {
+  const db = await getDb();
+  const col = db.collection<TeacherDoc>(TEACHERS);
+  const now = new Date();
+  const order = typeof input.order === "number" ? input.order : (await col.countDocuments()) + 1;
+  const doc = {
+    name: input.name.trim(),
+    designation: input.designation?.trim() || undefined,
+    qualification: input.qualification?.trim() || undefined,
+    photo: input.photo?.trim() || undefined,
+    order,
+    createdAt: now,
+    updatedAt: now,
+  };
+  const res = await col.insertOne(doc as unknown as TeacherDoc);
+  return await col.findOne({ _id: res.insertedId });
+}
+
+export async function updateTeacher(id: string, input: TeacherInput) {
+  const db = await getDb();
+  const col = db.collection<TeacherDoc>(TEACHERS);
+  if (!ObjectId.isValid(id)) return null;
+  const _id = new ObjectId(id);
+  const patch: Partial<TeacherDoc> = {
+    name: input.name.trim(),
+    designation: input.designation?.trim() || undefined,
+    qualification: input.qualification?.trim() || undefined,
+    photo: input.photo?.trim() || undefined,
+    updatedAt: new Date(),
+  };
+  if (typeof input.order === "number") patch.order = input.order;
+  await col.updateOne({ _id }, { $set: patch });
+  return await col.findOne({ _id });
+}
+
+export async function deleteTeacher(id: string) {
+  const db = await getDb();
+  const col = db.collection<TeacherDoc>(TEACHERS);
+  if (!ObjectId.isValid(id)) return false;
+  const res = await col.deleteOne({ _id: new ObjectId(id) });
+  return res.deletedCount === 1;
+}
+
+// PTA
+
+export async function listPtaMembers() {
+  const db = await getDb();
+  const col = db.collection<PtaMemberDoc>(PTA);
+  const count = await col.countDocuments();
+  if (count === 0 && ptaSeed.length > 0) {
+    const now = new Date();
+    await col.insertMany(
+      ptaSeed.map((m, index) => ({
+        name: m.name,
+        role: m.role,
+        address: m.address,
+        order: index + 1,
+        createdAt: now,
+        updatedAt: now,
+      })) as unknown as PtaMemberDoc[],
+    );
+  }
+  return await col
+    .find({})
+    .sort({ order: 1, createdAt: 1 })
+    .toArray();
+}
+
+export async function createPtaMember(input: PtaMemberInput) {
+  const db = await getDb();
+  const col = db.collection<PtaMemberDoc>(PTA);
+  const now = new Date();
+  const order = typeof input.order === "number" ? input.order : (await col.countDocuments()) + 1;
+  const doc = {
+    name: input.name.trim(),
+    role: input.role.trim(),
+    address: input.address.trim(),
+    photo: input.photo?.trim() || undefined,
+    order,
+    createdAt: now,
+    updatedAt: now,
+  };
+  const res = await col.insertOne(doc as unknown as PtaMemberDoc);
+  return await col.findOne({ _id: res.insertedId });
+}
+
+export async function updatePtaMember(id: string, input: PtaMemberInput) {
+  const db = await getDb();
+  const col = db.collection<PtaMemberDoc>(PTA);
+  if (!ObjectId.isValid(id)) return null;
+  const _id = new ObjectId(id);
+  const patch: Partial<PtaMemberDoc> = {
+    name: input.name.trim(),
+    role: input.role.trim(),
+    address: input.address.trim(),
+    photo: input.photo?.trim() || undefined,
+    updatedAt: new Date(),
+  };
+  if (typeof input.order === "number") patch.order = input.order;
+  await col.updateOne({ _id }, { $set: patch });
+  return await col.findOne({ _id });
+}
+
+export async function deletePtaMember(id: string) {
+  const db = await getDb();
+  const col = db.collection<PtaMemberDoc>(PTA);
+  if (!ObjectId.isValid(id)) return false;
+  const res = await col.deleteOne({ _id: new ObjectId(id) });
+  return res.deletedCount === 1;
+}
+
+// SMC
+
+export async function listSmcMembers() {
+  const db = await getDb();
+  const col = db.collection<SmcMemberDoc>(SMC);
+  const count = await col.countDocuments();
+  if (count === 0 && smcSeed.length > 0) {
+    const now = new Date();
+    await col.insertMany(
+      smcSeed.map((m, index) => ({
+        name: m.name,
+        fatherOrSpouseName: m.fatherOrSpouseName,
+        designation: m.designation,
+        occupationWithAddress: m.occupationWithAddress,
+        residentialAddress: m.residentialAddress,
+        order: index + 1,
+        createdAt: now,
+        updatedAt: now,
+      })) as unknown as SmcMemberDoc[],
+    );
+  }
+  return await col
+    .find({})
+    .sort({ order: 1, createdAt: 1 })
+    .toArray();
+}
+
+export async function createSmcMember(input: SmcMemberInput) {
+  const db = await getDb();
+  const col = db.collection<SmcMemberDoc>(SMC);
+  const now = new Date();
+  const order = typeof input.order === "number" ? input.order : (await col.countDocuments()) + 1;
+  const doc = {
+    name: input.name.trim(),
+    fatherOrSpouseName: input.fatherOrSpouseName.trim(),
+    designation: input.designation.trim(),
+    occupationWithAddress: input.occupationWithAddress.trim(),
+    residentialAddress: input.residentialAddress.trim(),
+    photo: input.photo?.trim() || undefined,
+    order,
+    createdAt: now,
+    updatedAt: now,
+  };
+  const res = await col.insertOne(doc as unknown as SmcMemberDoc);
+  return await col.findOne({ _id: res.insertedId });
+}
+
+export async function updateSmcMember(id: string, input: SmcMemberInput) {
+  const db = await getDb();
+  const col = db.collection<SmcMemberDoc>(SMC);
+  if (!ObjectId.isValid(id)) return null;
+  const _id = new ObjectId(id);
+  const patch: Partial<SmcMemberDoc> = {
+    name: input.name.trim(),
+    fatherOrSpouseName: input.fatherOrSpouseName.trim(),
+    designation: input.designation.trim(),
+    occupationWithAddress: input.occupationWithAddress.trim(),
+    residentialAddress: input.residentialAddress.trim(),
+    photo: input.photo?.trim() || undefined,
+    updatedAt: new Date(),
+  };
+  if (typeof input.order === "number") patch.order = input.order;
+  await col.updateOne({ _id }, { $set: patch });
+  return await col.findOne({ _id });
+}
+
+export async function deleteSmcMember(id: string) {
+  const db = await getDb();
+  const col = db.collection<SmcMemberDoc>(SMC);
   if (!ObjectId.isValid(id)) return false;
   const res = await col.deleteOne({ _id: new ObjectId(id) });
   return res.deletedCount === 1;
