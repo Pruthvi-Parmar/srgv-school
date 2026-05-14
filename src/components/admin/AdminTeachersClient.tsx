@@ -162,9 +162,13 @@ export function AdminTeachersClient() {
             <input
               value={photo}
               onChange={(e) => setPhoto(e.target.value)}
-              placeholder="/gallery/teachers/teacher-1.jpeg"
+              placeholder="/gallery/teachers/teacher-1.jpeg or a Google Drive “share” link"
               className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-200"
             />
+            <p className="mt-1 text-xs leading-relaxed text-slate-500">
+              Google Drive: use the normal “Get link” URL — the site converts it for display. The file must be shared
+              as <span className="font-medium">Anyone with the link</span> (Viewer), or the image will stay blank.
+            </p>
           </label>
           <label className="block">
             <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">

@@ -44,6 +44,9 @@ export function SiteFooter({
             <Link href="/notices" className="hover:text-slate-900">
               Notices
             </Link>
+            <Link href="/cbse-info" className="hover:text-slate-900">
+              CBSE Info
+            </Link>
           </div>
         </div>
 

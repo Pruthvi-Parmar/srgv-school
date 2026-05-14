@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/facilities`, lastModified: now },
     { url: `${base}/gallery`, lastModified: now },
     { url: `${base}/notices`, lastModified: now },
+    { url: `${base}/cbse-info`, lastModified: now },
     { url: `${base}/contact`, lastModified: now },
   ];
 }

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { listTeachers } from "@/lib/data";
+import { normalizeImageSrcUrl } from "@/lib/remote-image-url";
 
 export async function TeachersSection() {
   const teachers = await listTeachers();
@@ -22,11 +23,12 @@ export async function TeachersSection() {
               {teacher.photo ? (
                 <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-200">
                   <Image
-                    src={teacher.photo}
+                    src={normalizeImageSrcUrl(teacher.photo)}
                     alt={teacher.name}
                     fill
                     sizes="40px"
                     className="object-cover"
+                    unoptimized={normalizeImageSrcUrl(teacher.photo).includes("drive.google.com")}
                   />
                 </div>
               ) : null}

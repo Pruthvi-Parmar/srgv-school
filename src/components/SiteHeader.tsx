@@ -14,6 +14,7 @@ const links = [
   { href: "/facilities", label: "Labs" },
   { href: "/gallery", label: "Gallery" },
   { href: "/notices", label: "Notices" },
+  { href: "/cbse-info", label: "CBSE Info" },
   { href: "/contact", label: "Contact" },
 ];
 
