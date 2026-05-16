@@ -4,13 +4,10 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "CBSE Info — Public Disclosure",
   description:
-    "CBSE public disclosure: general information, documents, and academic disclosures for Shree Radhagovind Vidhyamandir, Ninat.",
+    "CBSE public disclosure: general information, documents, and academic disclosures for Shree Radhagovind Vidyamandir, Ninat.",
 };
 
-function ExternalDocLink({ href, children }: { href: string | null; children: React.ReactNode }) {
-  if (!href) {
-    return <span className="text-slate-500">null</span>;
-  }
+function ExternalDocLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a
       href={href}
@@ -28,10 +25,7 @@ function pdfHref(filename: string) {
   return `/pdfs/${encodeURIComponent(filename)}`;
 }
 
-function DisclosureLinkCell({ href }: { href: string | null | string[] }) {
-  if (href === null) {
-    return <ExternalDocLink href={null}>VIEW</ExternalDocLink>;
-  }
+function DisclosureLinkCell({ href }: { href: string | string[] }) {
   if (Array.isArray(href)) {
     return (
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -63,8 +57,7 @@ export default function CbseInfoPage() {
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Public Disclosure</h1>
         <p className="mt-2 text-sm text-slate-600">
           Mandatory public disclosure under CBSE norms. Use <span className="font-semibold">VIEW</span> to open a
-          document in a new browser tab. Missing items are shown as <span className="font-mono">null</span> and will be
-          updated when documents are available.
+          document in a new browser tab. Committee PDFs are also available from the <span className="font-semibold">CBSE Info</span> menu in the site header (hover on desktop, + on mobile).
         </p>
       </header>
 
@@ -82,13 +75,13 @@ export default function CbseInfoPage() {
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {[
-                  ["1", "NAME OF THE SCHOOL", "Shree Radhagovind Vidhyamandir, Ninat"],
+                  ["1", "NAME OF THE SCHOOL", "Shree Radhagovind Vidyamandir, Ninat"],
                   ["2", "AFFILIATION NO. (IF APPILCABLE)", "430185"],
                   ["3", "SCHOOL CODE (IF APPLICABLE)", "10168"],
                   [
                     "4",
                     "COMPLETE ADDRESS WITH PIN CODE",
-                    "At & Po. Ninat, Via: Sarbhon, Ta: Bardoli, Dist: Surat, Pin code: 394350",
+                    "At & Post: Ninat, Via: Sarbhon, Ta: Bardoli, Dist: Surat, Pin code: 394350",
                   ],
                   ["5", "PRINCIPAL NAME", "Mrs. Deepa Kalpesh Joshi"],
                   ["6", "PRINCIPAL QULIFICATION", "MSC, B.Ed."],
@@ -141,44 +134,22 @@ export default function CbseInfoPage() {
                     ],
                     [
                       "4",
-                      "COPIES OF RECOGNITION CERTIFICATE UNDER RTE ACT, 2009, AND ITS RENEWAL, IF APPLICABLE",
-                      null,
-                    ],
-                    [
-                      "5",
                       "COPY OF VALID BUILDING SAFETY CERTIFICATE AS PER THE NATIONAL BUILDING CODE",
                       pdfHref("COPY OF VALID BUILDING SAFETY CERTIFICATE AS PER THE NATIONAL BUILDING CODE.pdf"),
                     ],
                     [
-                      "6",
+                      "5",
                       "COPY OF VALID FIRE SAFETY CERTIFICATE ISSUED BY THE COMPETENT AUTHORITY",
-                      pdfHref("COPY OF VALID FIRE SAFETY CERTIFICATE ISSUED BY THE COMPETENT AUTHORITYM.pdf"),
+                      pdfHref("Fire Safety.pdf"),
                     ],
                     [
-                      "7",
-                      "COPY OF THE DEO CERTIFICATE SUBMITTED BY THE SCHOOL FOR AFFILIATION/UPGRADATION/EXTENSION OF AFFILIATION OR SELF CERTIFICATION BY SCHOOL",
-                      null,
-                    ],
-                    [
-                      "8",
+                      "6",
                       "COPIES OF VALID WATER, HEALTH AND SANITATION CERTIFICATES",
                       [
                         pdfHref("COPIES OF VALID WATER, HEALTH AND SANITATION CERTIFICATES.pdf"),
                         pdfHref("water report school 2026.pdf"),
                       ],
                     ],
-                    [
-                      "9",
-                      "ANTI CORPORAL PUNISHMENT COMMITTEE (AS APPLICABLE)",
-                      pdfHref("Anti Corporal Punishment Committee.pdf"),
-                    ],
-                    [
-                      "10",
-                      "GRIEVANCE REDRESSAL COMMITTEE (AS APPLICABLE)",
-                      pdfHref("Grievance Redressal Committee.pdf"),
-                    ],
-                    ["11", "VISHAKHA / INTERNAL COMPLAINTS COMMITTEE (AS APPLICABLE)", pdfHref("Vishakha Committee 2026.pdf")],
-                    ["12", "POSCO / CHILD PROTECTION COMMITTEE (AS APPLICABLE)", pdfHref("POSCO COMMITTEE .pdf")],
                   ]
                 ).map(([sl, label, href]) => (
                   <tr key={String(sl)} className="align-top">
@@ -210,7 +181,7 @@ export default function CbseInfoPage() {
                   <td className="px-3 py-3 font-medium text-slate-500">1</td>
                   <td className="px-3 py-3 font-medium text-slate-800">FEE STRUCTURE OF THE SCHOOL</td>
                   <td className="px-3 py-3">
-                    <ExternalDocLink href={null}>VIEW</ExternalDocLink>
+                    <DisclosureLinkCell href={pdfHref("FEE STRUCTURE OF THE SCHOOL.pdf")} />
                   </td>
                 </tr>
                 <tr className="align-top">
@@ -333,11 +304,6 @@ export default function CbseInfoPage() {
                   ["4", "INTERNET FACILITY", "Yes"],
                   ["5", "NO. OF GIRLS TOILETS", "16"],
                   ["6", "NO. OF BOYS TOILETS", "16"],
-                  [
-                    "7",
-                    "LINK OF YOUTUBE VIDEO OF THE INSPECTION OF SCHOOL COVERING THE INFRASTRUCTURE OF THE SCHOOL",
-                    "null",
-                  ],
                 ].map(([sl, label, detail]) => (
                   <tr key={sl} className="align-top">
                     <td className="px-3 py-3 font-medium text-slate-500">{sl}</td>
