@@ -150,5 +150,23 @@ export type SmcMemberInput = {
   order?: number;
 };
 
+export type LeavingCertificate = {
+  _id: ObjectId;
+  /** Student name (displayed as the certificate title on the public page). */
+  title: string;
+  standard: string;
+  pdfPath: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type LeavingCertificateInput = {
+  title: string;
+  standard: string;
+  pdfPath: string;
+  order?: number;
+};
+
 
 

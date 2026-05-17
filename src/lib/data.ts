@@ -15,6 +15,8 @@ import type {
   SiteSettings,
   SmcMemberDoc,
   SmcMemberInput,
+  LeavingCertificate,
+  LeavingCertificateInput,
   TeacherDoc,
   TeacherInput,
 } from "@/lib/models";
@@ -31,6 +33,7 @@ const GALLERY_ITEMS = "gallery_items";
 const TEACHERS = "teachers";
 const PTA = "pta_members";
 const SMC = "smc_members";
+const LEAVING_CERTIFICATES = "leaving_certificates";
 
 export async function getSettings(): Promise<SiteSettings> {
   const db = await getDb();
@@ -606,6 +609,50 @@ export async function updateSmcMember(id: string, input: SmcMemberInput) {
 export async function deleteSmcMember(id: string) {
   const db = await getDb();
   const col = db.collection<SmcMemberDoc>(SMC);
+  if (!ObjectId.isValid(id)) return false;
+  const res = await col.deleteOne({ _id: new ObjectId(id) });
+  return res.deletedCount === 1;
+}
+
+// Leaving certificates
+
+export async function listLeavingCertificates(standard?: string) {
+  const db = await getDb();
+  const col = db.collection<LeavingCertificate>(LEAVING_CERTIFICATES);
+  const filter = standard ? { standard } : {};
+  return await col
+    .find(filter)
+    .sort({ standard: 1, title: 1, createdAt: -1 })
+    .toArray();
+}
+
+export async function getLeavingCertificateById(id: string) {
+  const db = await getDb();
+  const col = db.collection<LeavingCertificate>(LEAVING_CERTIFICATES);
+  if (!ObjectId.isValid(id)) return null;
+  return await col.findOne({ _id: new ObjectId(id) });
+}
+
+export async function createLeavingCertificate(input: LeavingCertificateInput) {
+  const db = await getDb();
+  const col = db.collection<LeavingCertificate>(LEAVING_CERTIFICATES);
+  const now = new Date();
+  const order = typeof input.order === "number" ? input.order : (await col.countDocuments()) + 1;
+  const doc = {
+    title: input.title.trim(),
+    standard: input.standard.trim(),
+    pdfPath: input.pdfPath.trim(),
+    order,
+    createdAt: now,
+    updatedAt: now,
+  };
+  const res = await col.insertOne(doc as unknown as LeavingCertificate);
+  return await col.findOne({ _id: res.insertedId });
+}
+
+export async function deleteLeavingCertificate(id: string) {
+  const db = await getDb();
+  const col = db.collection<LeavingCertificate>(LEAVING_CERTIFICATES);
   if (!ObjectId.isValid(id)) return false;
   const res = await col.deleteOne({ _id: new ObjectId(id) });
   return res.deletedCount === 1;

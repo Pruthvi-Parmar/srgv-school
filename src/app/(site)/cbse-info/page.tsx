@@ -57,7 +57,8 @@ export default function CbseInfoPage() {
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Public Disclosure</h1>
         <p className="mt-2 text-sm text-slate-600">
           Mandatory public disclosure under CBSE norms. Use <span className="font-semibold">VIEW</span> to open a
-          document in a new browser tab. Committee PDFs are also available from the <span className="font-semibold">CBSE Info</span> menu in the site header (hover on desktop, + on mobile).
+          document in a new browser tab. Committee PDFs and leaving certificates are also listed under the{" "}
+          <span className="font-semibold">CBSE Info</span> menu in the site header (hover on desktop, + on mobile).
         </p>
       </header>
 

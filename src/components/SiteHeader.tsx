@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import { LogoMark } from "@/components/LogoMark";
-import { CBSE_COMMITTEE_LINKS, publicPdfHref } from "@/lib/cbse-committee-links";
+import { CBSE_COMMITTEE_LINKS, LEAVING_CERTIFICATES_HREF, publicPdfHref } from "@/lib/cbse-committee-links";
 
 type SimpleLink = { href: string; label: string };
 
@@ -21,6 +21,10 @@ const simpleLinks: SimpleLink[] = [
 ];
 
 const cbseHref = "/cbse-info";
+
+function isCbseSectionActive(pathname: string) {
+  return pathname.startsWith(cbseHref) || pathname.startsWith(LEAVING_CERTIFICATES_HREF);
+}
 
 function navPillClass(active: boolean) {
   return [
@@ -49,20 +53,31 @@ function NavLink({
   );
 }
 
-function CommitteePdfLinks({ className }: { className?: string }) {
+function CbseDropdownLinks({ className, onNavigate }: { className?: string; onNavigate?: () => void }) {
   return (
     <div className={className}>
-      {CBSE_COMMITTEE_LINKS.map((item) => (
-        <a
-          key={item.file}
-          href={publicPdfHref(item.file)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block rounded-lg px-3 py-2 text-[13px] text-slate-700 hover:bg-slate-50 hover:text-slate-900"
-        >
-          {item.label}
-        </a>
-      ))}
+      {CBSE_COMMITTEE_LINKS.map((item) =>
+        item.type === "page" ? (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={onNavigate}
+            className="block rounded-lg px-3 py-2 text-[13px] text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+          >
+            {item.label}
+          </Link>
+        ) : (
+          <a
+            key={item.file}
+            href={publicPdfHref(item.file)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-lg px-3 py-2 text-[13px] text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+          >
+            {item.label}
+          </a>
+        ),
+      )}
     </div>
   );
 }
@@ -71,7 +86,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [cbseSubOpen, setCbseSubOpen] = useState(false);
   const pathname = usePathname();
-  const cbseActive = pathname.startsWith(cbseHref);
+  const cbseActive = isCbseSectionActive(pathname);
 
   const closeMobile = () => {
     setOpen(false);
@@ -106,7 +121,7 @@ export function SiteHeader() {
                     <div className="border-b border-slate-100 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
                       Committee documents
                     </div>
-                    <CommitteePdfLinks />
+                    <CbseDropdownLinks />
                   </div>
                 </div>
               </div>
@@ -152,9 +167,9 @@ export function SiteHeader() {
                 {cbseSubOpen ? (
                   <div id="mobile-cbse-committees" className="mt-1 border-t border-slate-200 pt-1">
                     <div className="px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
-                      Open in new tab
+                      Documents &amp; certificates
                     </div>
-                    <CommitteePdfLinks className="pb-1" />
+                    <CbseDropdownLinks className="pb-1" onNavigate={closeMobile} />
                   </div>
                 ) : null}
               </div>

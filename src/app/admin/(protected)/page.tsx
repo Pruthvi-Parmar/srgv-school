@@ -65,6 +65,13 @@ export default function AdminHomePage() {
           <div className="text-sm font-semibold text-slate-900">Academics text</div>
           <div className="mt-2 text-sm text-slate-600">Edit intro, guidelines and highlight cards.</div>
         </Link>
+        <Link
+          href="/admin/leaving-certificates"
+          className="rounded-2xl border border-slate-200 bg-white p-6 hover:bg-slate-50"
+        >
+          <div className="text-sm font-semibold text-slate-900">Leaving Certificates</div>
+          <div className="mt-2 text-sm text-slate-600">Upload and delete leaving certificate PDFs.</div>
+        </Link>
       </div>
     </div>
   );
