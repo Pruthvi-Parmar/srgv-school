@@ -650,6 +650,22 @@ export async function createLeavingCertificate(input: LeavingCertificateInput) {
   return await col.findOne({ _id: res.insertedId });
 }
 
+export async function updateLeavingCertificate(
+  id: string,
+  patch: Partial<Pick<LeavingCertificateInput, "title" | "standard" | "order">>,
+) {
+  const db = await getDb();
+  const col = db.collection<LeavingCertificate>(LEAVING_CERTIFICATES);
+  if (!ObjectId.isValid(id)) return null;
+  const _id = new ObjectId(id);
+  const $set: Partial<LeavingCertificate> = { updatedAt: new Date() };
+  if (typeof patch.title === "string" && patch.title.trim()) $set.title = patch.title.trim();
+  if (typeof patch.standard === "string" && patch.standard.trim()) $set.standard = patch.standard.trim();
+  if (typeof patch.order === "number") $set.order = patch.order;
+  await col.updateOne({ _id }, { $set });
+  return await col.findOne({ _id });
+}
+
 export async function deleteLeavingCertificate(id: string) {
   const db = await getDb();
   const col = db.collection<LeavingCertificate>(LEAVING_CERTIFICATES);

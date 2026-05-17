@@ -21,6 +21,10 @@ export function AdminLeavingCertificatesClient() {
   const [file, setFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [filterStandard, setFilterStandard] = useState<string>("all");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingTitle, setEditingTitle] = useState("");
+  const [editingStandard, setEditingStandard] = useState<string>(LEAVING_CERTIFICATE_STANDARDS[0]);
+  const [updating, setUpdating] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -85,6 +89,48 @@ export function AdminLeavingCertificatesClient() {
       setError(e instanceof Error ? e.message : "Upload failed");
     } finally {
       setSaving(false);
+    }
+  }
+
+  function startEdit(c: LeavingCertificateDto) {
+    setEditingId(c.id);
+    setEditingTitle(c.title);
+    setEditingStandard(
+      LEAVING_CERTIFICATE_STANDARDS.includes(
+        c.standard as (typeof LEAVING_CERTIFICATE_STANDARDS)[number],
+      )
+        ? c.standard
+        : LEAVING_CERTIFICATE_STANDARDS[0],
+    );
+    setError(null);
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setEditingTitle("");
+  }
+
+  async function saveEdit(id: string) {
+    if (!editingTitle.trim()) {
+      setError("Display name cannot be empty");
+      return;
+    }
+    setUpdating(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/admin/leaving-certificates/${id}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ title: editingTitle.trim(), standard: editingStandard }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) throw new Error(data.error || "Update failed");
+      cancelEdit();
+      await load();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Update failed");
+    } finally {
+      setUpdating(false);
     }
   }
 
@@ -195,39 +241,103 @@ export function AdminLeavingCertificatesClient() {
           </div>
         ) : (
           <div className="mt-4 space-y-3">
-            {filteredItems.map((c) => (
-              <div
-                key={c.id}
-                className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <div className="text-sm font-semibold text-slate-900">{c.title}</div>
-                    <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-700">
-                      {c.standard || "—"}
-                    </span>
-                  </div>
-                  <div className="mt-1 truncate text-xs text-slate-500">{c.pdfPath}</div>
+            {filteredItems.map((c) => {
+              const isEditing = editingId === c.id;
+              return (
+                <div
+                  key={c.id}
+                  className="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+                >
+                  {isEditing ? (
+                    <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+                      <div className="grid gap-3 sm:grid-cols-[2fr_1fr]">
+                        <label className="block">
+                          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                            Display name
+                          </span>
+                          <input
+                            value={editingTitle}
+                            onChange={(e) => setEditingTitle(e.target.value)}
+                            autoFocus
+                            className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-200"
+                            placeholder="Student name"
+                          />
+                        </label>
+                        <label className="block">
+                          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                            Standard
+                          </span>
+                          <select
+                            value={editingStandard}
+                            onChange={(e) => setEditingStandard(e.target.value)}
+                            className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-slate-200"
+                          >
+                            {LEAVING_CERTIFICATE_STANDARDS.map((s) => (
+                              <option key={s} value={s}>
+                                {s}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                      </div>
+                      <div className="flex shrink-0 items-center gap-2">
+                        <button
+                          type="button"
+                          disabled={updating || !editingTitle.trim()}
+                          onClick={() => void saveEdit(c.id)}
+                          className="rounded-lg bg-[color:var(--brand)] px-3 py-2 text-xs font-semibold text-white hover:opacity-95 disabled:opacity-60"
+                        >
+                          {updating ? "Saving…" : "Save"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={cancelEdit}
+                          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <div className="text-sm font-semibold text-slate-900">{c.title}</div>
+                          <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-700">
+                            {c.standard || "—"}
+                          </span>
+                        </div>
+                        <div className="mt-1 truncate text-xs text-slate-500">{c.pdfPath}</div>
+                      </div>
+                      <div className="flex shrink-0 items-center gap-2">
+                        <a
+                          href={c.pdfPath}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[color:var(--brand)] hover:bg-slate-50"
+                        >
+                          VIEW
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => startEdit(c)}
+                          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => void remove(c.id)}
+                          className="rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="flex shrink-0 items-center gap-2">
-                  <a
-                    href={c.pdfPath}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[color:var(--brand)] hover:bg-slate-50"
-                  >
-                    VIEW
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => void remove(c.id)}
-                    className="rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
