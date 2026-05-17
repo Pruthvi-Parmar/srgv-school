@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CommitteeDocumentsSection } from "@/components/CommitteeDocumentsSection";
 import { PublicDisclosureTables } from "@/components/PublicDisclosureTables";
 import { CBSE_INFO_HREF } from "@/lib/cbse-committee-links";
 
@@ -29,16 +28,15 @@ export default function PublicDisclosurePage() {
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Public Disclosure</h1>
         <p className="mt-2 max-w-3xl text-sm text-slate-600">
           Mandatory public disclosure under CBSE norms. Use <span className="font-semibold">VIEW</span> to open a
-          document in a new browser tab. Committee PDFs are listed below and in the{" "}
+          document in a new browser tab. Committee documents are on the{" "}
           <Link href={CBSE_INFO_HREF} className="font-semibold text-[color:var(--brand)] hover:underline">
             CBSE Info
           </Link>{" "}
-          menu.
+          page.
         </p>
       </header>
 
-      <div className="mt-8 space-y-10">
-        <CommitteeDocumentsSection />
+      <div className="mt-8">
         <PublicDisclosureTables />
       </div>
     </div>
