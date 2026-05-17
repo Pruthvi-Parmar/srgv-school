@@ -13,8 +13,8 @@ export const CBSE_COMMITTEE_LINKS = [
     label: "Vishakha / internal complaints committee",
   },
   {
-    file: "POSCO COMMITTEE .pdf",
-    label: "POSCO / child protection committee",
+    file: "POCSO COMMITTEE 2026.pdf",
+    label: "POCSO / child protection committee",
   },
 ] as const;
 
