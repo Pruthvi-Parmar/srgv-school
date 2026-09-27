@@ -248,7 +248,7 @@ export function PublicDisclosureTables() {
                   ["3", "TEACHERS SECTIONS RATIO", "1:1.5"],
                   ["4", "DETAILS OF SPECIAL EDUCATOR", "Kalpana Chaudhari"],
                   ["5", "DETAILS OF COUNSELOR AND WELLNESS TEACHER", "Chaitali Satote"],
-                  ["6", "DETAILS OF CAREER COUNSELOR", "Dr. Kirtikumar Patel"],
+                  ["6", "DETAILS OF CAREER COUNSELLOR", "Dr. Kirtikumar Patel"],
                 ].map((row, i) => (
                   <tr key={`${row[1]}-${i}`} className="align-top">
                     <td className="px-3 py-3 font-medium text-slate-500">{row[0] || ""}</td>
