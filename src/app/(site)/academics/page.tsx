@@ -84,7 +84,7 @@ export default async function AcademicsPage() {
               </p>
             </div>
             <a
-              href={`/disclosure/${encodeURIComponent("STUDENTS CLASS CATEGORIES 2026-27.docx")}`}
+              href={`/disclosure/${encodeURIComponent("Students class categories 2026-27.pdf")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-[color:var(--brand)] hover:bg-slate-100"
