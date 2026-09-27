@@ -67,7 +67,7 @@ export function SiteFooter({
             </div>
             <div>
               <span className="text-slate-600">Alt Phone:</span>{" "}
-              <span className="font-medium text-slate-900">97144 77650</span>
+              <span className="text-base font-medium text-slate-900">+91 7698006505</span>
             </div>
             <div>
               <span className="text-slate-600">Office:</span>{" "}

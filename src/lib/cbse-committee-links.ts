@@ -3,7 +3,8 @@
 export type CbseCommitteeLink =
   | { type: "pdf"; folder: "pdfs"; file: string; label: string }
   | { type: "pdf"; folder: "disclosure"; file: string; label: string }
-  | { type: "page"; href: string; label: string };
+  | { type: "page"; href: string; label: string }
+  | { type: "external"; href: string; label: string };
 
 /** Quick-access committee documents (header dropdown + top of CBSE / disclosure pages). */
 export const CBSE_COMMITTEE_LINKS: CbseCommitteeLink[] = [
@@ -42,6 +43,16 @@ export const CBSE_COMMITTEE_LINKS: CbseCommitteeLink[] = [
     href: "/leaving-certificates",
     label: "Leaving certificates",
   },
+  {
+    type: "external",
+    href: "https://cbseacademic.nic.in/curriculum_2027.html",
+    label: "CBSE Curriculum",
+  },
+  {
+    type: "external",
+    href: "https://cbseacademic.nic.in/circulars.html",
+    label: "CBSE Circular 2026",
+  },
 ];
 
 export const PUBLIC_DISCLOSURE_HREF = "/public-disclosure";
@@ -57,7 +68,7 @@ export function disclosurePdfHref(filename: string) {
 }
 
 export function cbseCommitteeLinkHref(item: CbseCommitteeLink): string {
-  if (item.type === "page") return item.href;
+  if (item.type === "page" || item.type === "external") return item.href;
   if (item.folder === "disclosure") return disclosurePdfHref(item.file);
   return publicPdfHref(item.file);
 }

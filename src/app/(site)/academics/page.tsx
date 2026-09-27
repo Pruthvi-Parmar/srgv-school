@@ -46,7 +46,45 @@ export default async function AcademicsPage() {
               </p>
             </div>
             <a
-              href={`/pdfs/${encodeURIComponent("Teachers info. 2026.pdf")}`}
+              href={`/disclosure/${encodeURIComponent("Teachers info. 2026.pdf")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-[color:var(--brand)] hover:bg-slate-100"
+            >
+              VIEW
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="text-sm font-semibold text-slate-900">Book List</div>
+              <p className="mt-1 text-sm text-slate-600">
+                Prescribed book list for all classes.
+              </p>
+            </div>
+            <a
+              href="/disclosure/Books.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-[color:var(--brand)] hover:bg-slate-100"
+            >
+              VIEW
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="text-sm font-semibold text-slate-900">Student Class-wise Category (2026–27)</div>
+              <p className="mt-1 text-sm text-slate-600">
+                Class-wise student category details for the academic year 2026–27.
+              </p>
+            </div>
+            <a
+              href={`/disclosure/${encodeURIComponent("STUDENTS CLASS CATEGORIES 2026-27.docx")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-[color:var(--brand)] hover:bg-slate-100"

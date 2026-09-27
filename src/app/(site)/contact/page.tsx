@@ -33,7 +33,7 @@ export default async function ContactPage() {
                   <WhatsAppLink phone={contact.phone} />
                 </span>
                 <p className="mt-1 text-xs text-slate-600">
-                  Alt: 97144 77650 &nbsp;·&nbsp; Office: 02622-253848
+                  Alt: +91 7698006505 &nbsp;·&nbsp; Office: 02622-253848
                 </p>
               </div>
               <div>

@@ -11,7 +11,7 @@ export function CommitteeDocumentsSection() {
       <ul className="mt-5 divide-y divide-slate-100 border-t border-slate-100">
         {CBSE_COMMITTEE_LINKS.map((item) => {
           const href = cbseCommitteeLinkHref(item);
-          const key = item.type === "page" ? item.href : `${item.folder}/${item.file}`;
+          const key = item.type === "page" || item.type === "external" ? item.href : `${item.folder}/${item.file}`;
 
           return (
             <li key={key}>
@@ -23,6 +23,18 @@ export function CommitteeDocumentsSection() {
                   <span>{item.label}</span>
                   <span className="shrink-0 text-xs font-semibold uppercase tracking-wide text-[color:var(--brand)]">
                     Open page →
+                  </span>
+                </a>
+              ) : item.type === "external" ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between gap-4 py-3.5 text-sm font-medium text-slate-800 transition-colors hover:text-[color:var(--brand)]"
+                >
+                  <span>{item.label}</span>
+                  <span className="shrink-0 text-xs font-semibold uppercase tracking-wide text-[color:var(--brand)]">
+                    Open link →
                   </span>
                 </a>
               ) : (

@@ -108,7 +108,7 @@ export function PublicDisclosureTables() {
                     [
                       "4",
                       "COPY OF VALID BUILDING SAFETY CERTIFICATE AS PER THE NATIONAL BUILDING CODE",
-                      pdfHref("COPY OF VALID BUILDING SAFETY CERTIFICATE AS PER THE NATIONAL BUILDING CODE.pdf"),
+                      `${base}/4.  Building Safety Certificate Annexure D.pdf`,
                     ],
                     [
                       "5",
@@ -118,10 +118,12 @@ export function PublicDisclosureTables() {
                     [
                       "6",
                       "COPIES OF VALID WATER, HEALTH AND SANITATION CERTIFICATES",
-                      [
-                        pdfHref("COPIES OF VALID WATER, HEALTH AND SANITATION CERTIFICATES.pdf"),
-                        pdfHref("water report school 2026.pdf"),
-                      ],
+                      `${base}/DOC-20260820-WA0009.pdf`,
+                    ],
+                    [
+                      "7",
+                      "COPY OF VALID CERTIFICATE OF LAND",
+                      `${base}/DOC-20260821-WA0002.pdf`,
                     ],
                   ]
                 ).map(([sl, label, href]) => (
@@ -214,7 +216,7 @@ export function PublicDisclosureTables() {
                     TEACHERS INFORMATION (LIST OF TEACHING &amp; NON-TEACHING STAFF)
                   </td>
                   <td className="px-3 py-3">
-                    <ExternalDocLink href={pdfHref("Teachers info. 2026.pdf")}>VIEW</ExternalDocLink>
+                    <ExternalDocLink href={`${base}/Teachers info. 2026.pdf`}>VIEW</ExternalDocLink>
                   </td>
                 </tr>
               </tbody>
@@ -244,8 +246,9 @@ export function PublicDisclosureTables() {
                   ["", "NTT", "3"],
                   ["", "Admin", "1"],
                   ["3", "TEACHERS SECTIONS RATIO", "1:1.5"],
-                  ["4", "DETAILS OF SPECIAL EDUCATOR", "Chesta Chauhan"],
-                  ["5", "DETAILS OF COUNSELOR AND WELLNESS TEACHER", "Chesta Chauhan"],
+                  ["4", "DETAILS OF SPECIAL EDUCATOR", "Kalpana Chaudhari"],
+                  ["5", "DETAILS OF COUNSELOR AND WELLNESS TEACHER", "Chaitali Satote"],
+                  ["6", "DETAILS OF CAREER COUNSELOR", "Dr. Kirtikumar Patel"],
                 ].map((row, i) => (
                   <tr key={`${row[1]}-${i}`} className="align-top">
                     <td className="px-3 py-3 font-medium text-slate-500">{row[0] || ""}</td>

@@ -77,7 +77,7 @@ function CbseDropdownLinks({ className, onNavigate }: { className?: string; onNa
       </div>
       {CBSE_COMMITTEE_LINKS.map((item) => {
         const href = cbseCommitteeLinkHref(item);
-        const key = item.type === "page" ? item.href : `${item.folder}/${item.file}`;
+        const key = item.type === "page" || item.type === "external" ? item.href : `${item.folder}/${item.file}`;
 
         if (item.type === "page") {
           return (
